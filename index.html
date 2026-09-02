@@ -200,6 +200,102 @@
       flex-direction: column;
     }
 
+    .seating-content {
+      text-align: center;
+    }
+
+    .seating-chart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+      margin-top: 1rem;
+    }
+
+    .seating-rects {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.5rem;
+      width: 100%;
+    }
+
+    .table-rect {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      border: 1.5px solid var(--line);
+      border-radius: 6px;
+      padding: 1rem;
+      min-width: 220px;
+      background: rgba(255, 255, 255, .28);
+    }
+
+    .table-surface {
+      padding: .5rem 1.2rem;
+      border-radius: 4px;
+      background: rgba(102, 124, 103, .12);
+      font-family: "Caveat", cursive;
+      font-size: 1.4rem;
+    }
+
+    .seat-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: .5rem;
+    }
+
+    .seat {
+      width: 3.2rem;
+      height: 3.2rem;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-size: .58rem;
+      line-height: 1.05;
+      padding: .25rem;
+      overflow: hidden;
+    }
+
+    .table-round-wrap {
+      position: relative;
+      width: 230px;
+      height: 230px;
+    }
+
+    .table-round {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 1.5px solid var(--line);
+      background: rgba(255, 255, 255, .28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Caveat", cursive;
+      font-size: 1.4rem;
+    }
+
+    .table-round-wrap .seat {
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
+
+    .seating-error {
+      font-style: italic;
+      opacity: .7;
+    }
+
     .end {
       min-height: 60vh;
       text-align: center;
@@ -233,6 +329,47 @@
         grid-template-columns: 5.1rem 1fr;
         gap: .8rem;
       }
+
+      .seating-rects {
+        gap: 1rem;
+      }
+
+      .table-rect {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        padding: .75rem .5rem;
+      }
+
+      .seat-row {
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: .35rem;
+      }
+
+      .table-surface {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        padding: .8rem .4rem;
+        font-size: 1.1rem;
+      }
+
+      .table-round-wrap {
+        width: 190px;
+        height: 190px;
+      }
+
+      .table-round {
+        width: 105px;
+        height: 105px;
+      }
+
+      .seat {
+        width: 2.3rem;
+        height: 2.3rem;
+        font-size: .48rem;
+      }
     }
   </style>
 </head>
@@ -252,21 +389,86 @@
       <div class="content">
         <h2 class="section-title">Programa</h2>
         <ol class="schedule">
-          <li><span class="time">17:00</span><span>Chegadas</span></li>
           <li><span class="time">17:30</span><span>Cerimónia</span></li>
-          <li><span class="time">18:30</span><span>Sunset <span class="place">(Rooftop)</span></span></li>
+          <li><span class="time">18:30</span><span> Sunset & Entradas <span class="place">(Rooftop)</span></span></li>
           <li><span class="time">20:30</span><span>Consommé <span class="place">(Sala interior)</span></span></li>
-          <li><span class="time">20:45</span><span>Entradas</span></li>
+          <li><span class="time">20:45</span><span>Entrada</span></li>
           <li><span class="time">21:00</span><span>Prato principal</span></li>
-          <li><span class="time">21:45</span><span>Buffet de sobremesas, café e digestivos <span class="place">(Sala
+          <li><span class="time">21:45</span><span>Buffet de sobremesas e digestivos <span class="place">(Sala
                 interior + esplanada)</span></span></li>
           <li><span class="time">22:15</span><span>Ramo da Noiva</span></li>
-          <li><span class="time">23:00</span><span>Corte do bolo</span></li>
-          <li><span class="time">23:30</span><span>Entrega de lembranças e despedidas <span
-                class="place">(Jardim)</span></span></li>
+          <li><span class="time">23:00</span><span>Corte do bolo <span class="place">(Jardim)</span></span></li>
+          <li><span class="time">23:30</span><span>Entrega de lembranças e despedidas</span></li>
         </ol>
       </div>
     </section>
+
+    <section id="lugares">
+      <div class="content seating-content">
+        <h2 class="section-title">Onde te vais sentar</h2>
+        <div class="seating-chart" id="seating-chart">
+          <div class="seating-rects">
+            <div class="table-block" data-table-id="A">
+              <div class="table-rect">
+                <div class="seat-row seat-row-top"></div>
+                <div class="table-surface">Mesa A</div>
+                <div class="seat-row seat-row-bottom"></div>
+              </div>
+            </div>
+            <div class="table-block" data-table-id="B">
+              <div class="table-rect">
+                <div class="seat-row seat-row-top"></div>
+                <div class="table-surface">Mesa B</div>
+                <div class="seat-row seat-row-bottom"></div>
+              </div>
+            </div>
+          </div>
+          <div class="table-block" data-table-id="C">
+            <div class="table-round-wrap">
+              <div class="table-round">Mesa C</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script type="application/json" id="lugares-data">
+      {
+        "tables": [
+          {
+            "id": "A",
+            "shape": "rectangle",
+            "seats": [
+             "Lourdes Pereira", "Francisco Pedrosa", "Cristina Lemos", "Vitor Freitas", "Leonor Freitas", "Alice Soares",
+              "Catarina", "Alberto Mota", "Noiva", "Noivo", "Fátima Zenha",
+              "Alberto Moura", "Maria Emília", "António Zenha", "José Moreira",
+              "Lurdes Moreira", "Rui Pinto", "Cristina Pinto", "Sérgio Soares", "Libânia Soares",
+              "Agostinho Braga", "Isabel Pinto", "Rui Moura", "Maria Inês", "Paulo Zenha",
+              "Joaquina Marques", "Sebastião Zenha", "Marita Zenha"
+            ]
+          },
+          {
+            "id": "B",
+            "shape": "rectangle",
+            "seats": [
+              "Igor Goes", "Cintia Goes", "João Zenha", "Sara", "Luís Rodrigues",
+              "Tânia", "Miguel Bastos", "Xana Monteiro", "Pedro Cardoso", "Ana Pedrosa",
+              "Cláudia", "Leonor", "Eduardo", "Breno Goes", "Adriano Goes",
+              "Rita", "Marco Zenha", "Ana", "Artur", "Mariana Matos",
+              "André Makrilou", "Sara Tavares", "Emanuel Ferraz", "Ana Zenha", "André Zenha",
+              "Liana Zenha"
+            ]
+          },
+          {
+            "id": "C",
+            "shape": "round",
+            "seats": [
+              "Emília Moura", "Amália Moura", "Santiago Soares", "Mariana Soares"
+            ]
+          }
+        ]
+      }
+    </script>
 
     <section id="ementa">
       <div class="content menu-card">
@@ -288,18 +490,96 @@
         </div>
 
         <div class="menu-item">
+          <h3>Carta de Vinhos</h3>
+          <p>Quinta de Monforte</p>
+          <p>Duorum Branco e Tinto</p>
+          <p>Herdade dos Grous Tinto</p>
+          <p>Quinta de Carmo Branco</p>
+          <p>Bacalhoa Greco di Tufo</p>
+          <p>Bacalhoa Merlot</p>
+        </div>
+
+        <div class="menu-item">
           <h3>Canto dos doces</h3>
-          <p>Sobremesas variadas</p>
         </div>
 
         <div class="menu-item">
           <h3>Bolo dos noivos</h3>
+          <p>Massa de limão com recheio de pistácio e doce de frutos vermelhos</p>
         </div>
       </div>
       <div class="ementa-signature">PEDRO &amp; INÊS</div>
       <div class="date">05.09.2026</div>
     </section>
   </main>
+
+  <script>
+    (function () {
+      const chart = document.getElementById('seating-chart');
+      if (!chart) return;
+
+      try {
+        const data = JSON.parse(document.getElementById('lugares-data').textContent);
+        renderSeating(data.tables || []);
+      } catch (error) {
+        console.error('Não foi possível ler os lugares:', error);
+        chart.innerHTML = '<p class="seating-error">Não foi possível carregar os lugares.</p>';
+      }
+
+      function renderSeating(tables) {
+        tables.forEach((table) => {
+          const block = chart.querySelector(`[data-table-id="${table.id}"]`);
+          if (!block) return;
+
+          if (table.shape === 'round') {
+            renderRoundTable(block, table.seats || []);
+          } else {
+            renderRectTable(block, table.seats || []);
+          }
+        });
+      }
+
+      function makeSeat(name) {
+        const seat = document.createElement('div');
+        seat.className = 'seat';
+        seat.textContent = name;
+        seat.title = name;
+        return seat;
+      }
+
+      function renderRectTable(block, seats) {
+        const topRow = block.querySelector('.seat-row-top');
+        const bottomRow = block.querySelector('.seat-row-bottom');
+        const half = Math.ceil(seats.length / 2);
+
+        seats.slice(0, half).forEach((name) => topRow.appendChild(makeSeat(name)));
+        seats.slice(half).forEach((name) => bottomRow.appendChild(makeSeat(name)));
+      }
+
+      function renderRoundTable(block, seats) {
+        const wrap = block.querySelector('.table-round-wrap');
+        const seatEls = seats.map((name) => {
+          const seat = makeSeat(name);
+          wrap.appendChild(seat);
+          return seat;
+        });
+
+        function layout() {
+          const radius = wrap.clientWidth / 2 - 8;
+          const center = wrap.clientWidth / 2;
+
+          seatEls.forEach((seat, i) => {
+            const angle = (i / seatEls.length) * Math.PI * 2 - Math.PI / 2;
+            seat.style.left = `${center + radius * Math.cos(angle)}px`;
+            seat.style.top = `${center + radius * Math.sin(angle)}px`;
+          });
+        }
+
+        layout();
+        window.addEventListener('resize', layout);
+      }
+    })();
+  </script>
 </body>
 
 </html>
