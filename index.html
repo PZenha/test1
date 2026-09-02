@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="pt-PT">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f1">
+  <title>Casamento de Pedro &amp; Inês</title>
+  <meta name="description" content="Casamento de Pedro & Inês — 5 de setembro de 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cormorant+Garamond:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f6f5f1;
+      --ink: #292827;
+      --sage: #667c67;
+      --line: rgba(41, 40, 39, .20);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--paper);
+      background-image: url("./4ef9be2d-a9e1-4726-9d4d-0b0d0d0fa20d.jpeg");
+      background-position: center top;
+      background-size: 100% auto;
+      background-repeat: repeat-y;
+      background-attachment: scroll;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: transparent;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 19px;
+      line-height: 1.35;
+    }
+
+    body::before {
+      display: none;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 12vh 7vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero {
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: .34em;
+      font-size: .8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    h1 {
+      font-family: "Caveat", cursive;
+      font-weight: 400;
+      font-size: clamp(3.4rem, 8vw, 7rem);
+      line-height: .95;
+      margin: 0;
+    }
+
+    .date {
+      margin-top: 1.5rem;
+      font-size: 1.15rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+    }
+
+    .scroll {
+      margin-top: 8vh;
+      font-size: .75rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      opacity: .65;
+    }
+
+    .scroll::after {
+      content: "↓";
+      display: block;
+      font-size: 1.4rem;
+      margin-top: .6rem;
+    }
+
+    .content {
+      width: min(900px, 100%);
+      text-align: center;
+      background: rgba(246, 245, 241, .5);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      padding: clamp(2rem, 6vw, 5rem);
+      border-radius: 2px;
+      box-shadow: 0 12px 45px rgba(40, 40, 35, .04);
+    }
+
+    .section-title {
+      font-family: "Caveat", cursive;
+      font-weight: 400;
+      font-size: clamp(3rem, 7vw, 5rem);
+      margin: 0 0 2rem;
+    }
+
+    .schedule {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+    }
+
+    .schedule li {
+      display: grid;
+      grid-template-columns: 6rem 1fr;
+      gap: 1.4rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .schedule li:last-child {
+      border-bottom: 0;
+    }
+
+    .time {
+      font-weight: 600;
+      letter-spacing: .06em;
+      white-space: nowrap;
+    }
+
+    .place {
+      display: block;
+      font-style: italic;
+      opacity: .72;
+      font-size: .9em;
+      margin-top: .15rem;
+    }
+
+    .menu-card {
+      text-align: center;
+    }
+
+    .menu-heading {
+      font-family: "Caveat", cursive;
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 400;
+      margin: 0 0 3rem;
+    }
+
+    .menu-item {
+      margin: 0 0 2.4rem;
+    }
+
+    .menu-item h3 {
+      margin: 0 0 .65rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: none;
+    }
+
+    .menu-item p {
+      margin: 0 auto;
+      max-width: 620px;
+      font-style: italic;
+      font-size: 1.15rem;
+    }
+
+    .signature {
+      margin-top: 3.5rem;
+      font-family: "Caveat", cursive;
+      font-size: 2.2rem;
+    }
+
+    .ementa-signature {
+      margin-top: 4rem;
+      font-family: "Caveat", cursive;
+      font-size: 2.2rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    #ementa {
+      flex-direction: column;
+    }
+
+    .end {
+      min-height: 60vh;
+      text-align: center;
+    }
+
+    .end p {
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      font-size: .8rem;
+    }
+
+    @media (max-width: 620px) {
+      html {
+        background-size: 200% auto;
+        background-position: center top;
+      }
+
+      body {
+        font-size: 17px;
+      }
+
+      section {
+        padding: 9vh 5vw;
+      }
+
+      .content {
+        padding: 2rem 1.25rem;
+      }
+
+      .schedule li {
+        grid-template-columns: 5.1rem 1fr;
+        gap: .8rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-inner">
+        <div class="eyebrow">5 de setembro de 2026</div>
+        <h1>Casamento de Pedro &amp; Inês</h1>
+        <div class="date">Um dia para celebrar</div>
+        <div class="scroll">Desliza para descobrir</div>
+      </div>
+    </section>
+
+    <section id="programa">
+      <div class="content">
+        <h2 class="section-title">Programa</h2>
+        <ol class="schedule">
+          <li><span class="time">17:00</span><span>Chegadas</span></li>
+          <li><span class="time">17:30</span><span>Cerimónia</span></li>
+          <li><span class="time">18:30</span><span>Sunset <span class="place">(Rooftop)</span></span></li>
+          <li><span class="time">20:30</span><span>Consommé <span class="place">(Sala interior)</span></span></li>
+          <li><span class="time">20:45</span><span>Entradas</span></li>
+          <li><span class="time">21:00</span><span>Prato principal</span></li>
+          <li><span class="time">21:45</span><span>Buffet de sobremesas, café e digestivos <span class="place">(Sala
+                interior + esplanada)</span></span></li>
+          <li><span class="time">22:15</span><span>Ramo da Noiva</span></li>
+          <li><span class="time">23:00</span><span>Corte do bolo</span></li>
+          <li><span class="time">23:30</span><span>Entrega de lembranças e despedidas <span
+                class="place">(Jardim)</span></span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="ementa">
+      <div class="content menu-card">
+        <h2 class="menu-heading">Ementa</h2>
+
+        <div class="menu-item">
+          <h3>Consommé</h3>
+          <p>Creme de ervilhas e crocante de presunto</p>
+        </div>
+
+        <div class="menu-item">
+          <h3>Entrada</h3>
+          <p>Tentúgal de bacalhau</p>
+        </div>
+
+        <div class="menu-item">
+          <h3>Prato principal</h3>
+          <p>Bife Wellington com esparregado de espinafres</p>
+        </div>
+
+        <div class="menu-item">
+          <h3>Canto dos doces</h3>
+          <p>Sobremesas variadas</p>
+        </div>
+
+        <div class="menu-item">
+          <h3>Bolo dos noivos</h3>
+        </div>
+      </div>
+      <div class="ementa-signature">PEDRO &amp; INÊS</div>
+      <div class="date">05.09.2026</div>
+    </section>
+  </main>
+</body>
+
+</html>
