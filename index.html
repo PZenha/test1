@@ -1,17 +1,27 @@
 <!doctype html>
+
 <html lang="pt-PT">
 
 <head>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f6f5f1">
+
   <title>Casamento de Pedro &amp; Inês</title>
+
   <meta name="description" content="Casamento de Pedro & Inês — 5 de setembro de 2026.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
   <link
     href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cormorant+Garamond:wght@400;500;600&display=swap"
     rel="stylesheet">
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
   <style>
     :root {
       --paper: #f6f5f1;
@@ -99,6 +109,25 @@
       display: block;
       font-size: 1.4rem;
       margin-top: .6rem;
+    }
+
+    .scroll-link {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 10px 20px;
+      text-decoration: none;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      border-radius: 25px;
+      font-size: .75rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      transition: opacity .2s ease, background .2s ease;
+    }
+
+    .scroll-link:hover {
+      opacity: .8;
+      background: rgba(102, 124, 103, .08);
     }
 
     .content {
@@ -296,6 +325,115 @@
       opacity: .7;
     }
 
+    /*
+     * ==========================================
+     * FOTOGRAFIAS
+     * ==========================================
+     */
+
+    #fotografias {
+      min-height: 100vh;
+      padding: 12vh 5vw;
+    }
+
+    .photos-content {
+      width: min(1100px, 100%);
+      text-align: center;
+    }
+
+    .photos-description {
+      max-width: 650px;
+      margin: 0 auto 2rem;
+      font-size: 1.15rem;
+    }
+
+    .upload-button {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: 30px;
+      background: var(--ink);
+      color: white;
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1rem;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .upload-button:hover {
+      opacity: .82;
+      transform: translateY(-1px);
+    }
+
+    #photo-input {
+      display: none;
+    }
+
+    #upload-status {
+      min-height: 25px;
+      margin-top: 1rem;
+      font-size: .95rem;
+      font-style: italic;
+    }
+
+    .upload-progress {
+      display: none;
+      width: min(400px, 90%);
+      height: 6px;
+      margin: 1rem auto;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(41, 40, 39, .12);
+    }
+
+    .upload-progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--sage);
+      transition: width .2s ease;
+    }
+
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 3rem;
+      text-align: left;
+    }
+
+    .photo-gallery a {
+      display: block;
+      overflow: hidden;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .3);
+      aspect-ratio: 1 / 1;
+    }
+
+    .photo-gallery img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s ease;
+    }
+
+    .photo-gallery a:hover img {
+      transform: scale(1.04);
+    }
+
+    .photo-empty {
+      grid-column: 1 / -1;
+      padding: 40px 20px;
+      text-align: center;
+      opacity: .7;
+      font-style: italic;
+    }
+
+    /*
+     * ==========================================
+     * FINAL
+     * ==========================================
+     */
+
     .end {
       min-height: 60vh;
       text-align: center;
@@ -308,6 +446,7 @@
     }
 
     @media (max-width: 620px) {
+
       html {
         background-size: 200% auto;
         background-position: center top;
@@ -370,125 +509,471 @@
         height: 2.3rem;
         font-size: .48rem;
       }
+
+      .photo-gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+      }
+
+      #fotografias {
+        padding: 9vh 4vw;
+      }
+    }
+
+    .photo-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .92);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(3px);
+    }
+
+    .photo-modal.active {
+      display: flex;
+    }
+
+    .photo-modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      background: rgba(246, 245, 241, .95);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .photo-modal-image {
+      max-width: 100%;
+      max-height: 85vh;
+      object-fit: contain;
+      flex: 1;
+    }
+
+    .photo-modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 36px;
+      height: 36px;
+      background: rgba(0, 0, 0, .6);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s ease;
+      z-index: 1001;
+    }
+
+    .photo-modal-close:hover {
+      background: rgba(0, 0, 0, .8);
+    }
+
+    .photo-modal-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, .5);
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s ease;
+      border-radius: 4px;
+    }
+
+    .photo-modal-nav:hover {
+      background: rgba(0, 0, 0, .7);
+    }
+
+    .photo-modal-nav.prev {
+      left: 12px;
+    }
+
+    .photo-modal-nav.next {
+      right: 12px;
+    }
+
+    .load-more-container {
+      text-align: center;
+      margin-top: 2rem;
+      display: none;
+    }
+
+    .load-more-container.visible {
+      display: block;
+    }
+
+    .load-more-button {
+      display: inline-block;
+      padding: 12px 32px;
+      border-radius: 30px;
+      background: var(--sage);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1rem;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .load-more-button:hover {
+      opacity: .85;
+      transform: translateY(-1px);
+    }
+
+    .load-more-button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .pagination-container {
+      text-align: center;
+      margin-top: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+    }
+
+    .pagination-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 6px;
+      background: var(--sage);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 0.95rem;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+      opacity: .85;
+      transform: translateY(-1px);
+    }
+
+    .pagination-btn:disabled {
+      opacity: .4;
+      cursor: not-allowed;
+    }
+
+    .page-info {
+      font-size: 0.95rem;
+      min-width: 100px;
+      text-align: center;
     }
   </style>
+
 </head>
 
 <body>
+
   <main>
+
+    <!-- ==========================================
+         INÍCIO
+         ========================================== -->
+
     <section class="hero" id="inicio">
+
       <div class="hero-inner">
-        <div class="eyebrow">5 de setembro de 2026</div>
-        <h1>Casamento de Pedro &amp; Inês</h1>
-        <div class="date">Um dia para celebrar</div>
-        <div class="scroll">Desliza para descobrir</div>
+
+        <div class="eyebrow">
+          5 de setembro de 2026
+        </div>
+
+        <h1>
+          Casamento de Pedro &amp; Inês
+        </h1>
+
+        <div class="date">
+          Um dia para celebrar
+        </div>
+
+        <div class="scroll">
+          Desliza para descobrir
+        </div>
+
+        <a href="#fotografias" class="scroll-link">Navega para as fotografias</a>
+
       </div>
+
     </section>
+
+    <!-- ==========================================
+         PROGRAMA
+         ========================================== -->
 
     <section id="programa">
+
       <div class="content">
-        <h2 class="section-title">Programa</h2>
+
+        <h2 class="section-title">
+          Programa
+        </h2>
+
         <ol class="schedule">
-          <li><span class="time">17:30</span><span>Cerimónia</span></li>
-          <li><span class="time">18:30</span><span> Sunset & Entradas <span class="place">(Rooftop)</span></span></li>
-          <li><span class="time">20:30</span><span>Consommé <span class="place">(Sala interior)</span></span></li>
-          <li><span class="time">20:45</span><span>Entrada</span></li>
-          <li><span class="time">21:00</span><span>Prato principal</span></li>
-          <li><span class="time">21:45</span><span>Buffet de sobremesas e digestivos <span class="place">(Sala
-                interior + esplanada)</span></span></li>
-          <li><span class="time">22:15</span><span>Ramo da Noiva</span></li>
-          <li><span class="time">23:00</span><span>Corte do bolo <span class="place">(Jardim)</span></span></li>
-          <li><span class="time">23:30</span><span>Entrega de lembranças e despedidas</span></li>
+
+          <li>
+            <span class="time">17:30</span>
+            <span>Cerimónia</span>
+          </li>
+
+          <li>
+            <span class="time">18:30</span>
+            <span>
+              Sunset &amp; Entradas
+              <span class="place">(Rooftop)</span>
+            </span>
+          </li>
+
+          <li>
+            <span class="time">20:30</span>
+            <span>
+              Consommé
+              <span class="place">(Sala interior)</span>
+            </span>
+          </li>
+
+          <li>
+            <span class="time">20:45</span>
+            <span>Entrada</span>
+          </li>
+
+          <li>
+            <span class="time">21:00</span>
+            <span>Prato principal</span>
+          </li>
+
+          <li>
+            <span class="time">21:45</span>
+            <span>
+              Buffet de sobremesas e digestivos
+              <span class="place">
+                (Sala interior + esplanada)
+              </span>
+            </span>
+          </li>
+
+          <li>
+            <span class="time">22:15</span>
+            <span>Ramo da Noiva</span>
+          </li>
+
+          <li>
+            <span class="time">23:00</span>
+            <span>
+              Corte do bolo
+              <span class="place">(Jardim)</span>
+            </span>
+          </li>
+
+          <li>
+            <span class="time">23:30</span>
+            <span>
+              Entrega de lembranças e despedidas
+            </span>
+          </li>
+
         </ol>
+
       </div>
+
     </section>
+
+    <!-- ==========================================
+         LUGARES
+         ========================================== -->
 
     <section id="lugares">
+
       <div class="content seating-content">
-        <h2 class="section-title">Onde te vais sentar</h2>
+
+        <h2 class="section-title">
+          Onde te vais sentar
+        </h2>
+
         <div class="seating-chart" id="seating-chart">
+
           <div class="seating-rects">
+
             <div class="table-block" data-table-id="A">
+
               <div class="table-rect">
+
                 <div class="seat-row seat-row-top"></div>
-                <div class="table-surface">Mesa A</div>
+
+                <div class="table-surface">
+                  Mesa A
+                </div>
+
                 <div class="seat-row seat-row-bottom"></div>
+
               </div>
+
             </div>
+
             <div class="table-block" data-table-id="B">
+
               <div class="table-rect">
+
                 <div class="seat-row seat-row-top"></div>
-                <div class="table-surface">Mesa B</div>
+
+                <div class="table-surface">
+                  Mesa B
+                </div>
+
                 <div class="seat-row seat-row-bottom"></div>
+
               </div>
+
             </div>
+
           </div>
+
           <div class="table-block" data-table-id="C">
+
             <div class="table-round-wrap">
-              <div class="table-round">Mesa C</div>
+
+              <div class="table-round">
+                Mesa C
+              </div>
+
             </div>
+
           </div>
+
         </div>
+
       </div>
+
     </section>
 
+    <!-- ==========================================
+         DADOS DOS LUGARES
+         ========================================== -->
+
     <script type="application/json" id="lugares-data">
+
       {
         "tables": [
           {
             "id": "A",
             "shape": "rectangle",
             "seats": [
-             "Lourdes Pereira", "Francisco Pedrosa", "Cristina Lemos", "Vitor Freitas", "Leonor Freitas", "Alice Soares",
-              "Catarina", "Alberto Mota", "Noiva", "Noivo", "Fátima Zenha",
-              "Alberto Moura", "Maria Emília", "António Zenha", "José Moreira",
-              "Lurdes Moreira", "Rui Pinto", "Cristina Pinto", "Sérgio Soares", "Libânia Soares",
-              "Agostinho Braga", "Isabel Pinto", "Rui Moura", "Maria Inês", "Paulo Zenha",
-              "Joaquina Marques", "Sebastião Zenha", "Marita Zenha"
+              "Lourdes Pereira",
+              "Francisco Pedrosa",
+              "Cristina Lemos",
+              "Vitor Freitas",
+              "Leonor Freitas",
+              "Alice Soares",
+              "Catarina",
+              "Alberto Mota",
+              "Noiva",
+              "Noivo",
+              "Fátima Zenha",
+              "Alberto Moura",
+              "Maria Emília",
+              "António Zenha",
+              "José Moreira",
+              "Lurdes Moreira",
+              "Rui Pinto",
+              "Cristina Pinto",
+              "Sérgio Soares",
+              "Libânia Soares",
+              "Agostinho Braga",
+              "Isabel Pinto",
+              "Rui Moura",
+              "Maria Inês",
+              "Paulo Zenha",
+              "Joaquina Marques",
+              "Sebastião Zenha",
+              "Marita Zenha"
             ]
           },
+
           {
             "id": "B",
             "shape": "rectangle",
             "seats": [
-              "Igor Goes", "Cintia Goes", "João Zenha", "Sara", "Luís Rodrigues",
-              "Tânia", "Miguel Bastos", "Xana Monteiro", "Pedro Cardoso", "Ana Pedrosa",
-              "Cláudia", "Leonor", "Eduardo", "Breno Goes", "Adriano Goes",
-              "Rita", "Marco Zenha", "Ana", "Artur", "Mariana Matos",
-              "André Makrilou", "Sara Tavares", "Emanuel Ferraz", "Ana Zenha", "André Zenha",
+              "Igor Goes",
+              "Cintia Goes",
+              "João Zenha",
+              "Sara",
+              "Luís Rodrigues",
+              "Tânia",
+              "Miguel Bastos",
+              "Xana Monteiro",
+              "Pedro Cardoso",
+              "Ana Pedrosa",
+              "Cláudia",
+              "Leonor",
+              "Eduardo",
+              "Breno Goes",
+              "Adriano Goes",
+              "Rita",
+              "Marco Zenha",
+              "Ana",
+              "Artur",
+              "Mariana Matos",
+              "André Makrilou",
+              "Sara Tavares",
+              "Emanuel Ferraz",
+              "Ana Zenha",
+              "André Zenha",
               "Liana Zenha"
             ]
           },
+
           {
             "id": "C",
             "shape": "round",
             "seats": [
-              "Emília Moura", "Amália Moura", "Santiago Soares", "Mariana Soares"
+              "Emília Moura",
+              "Amália Moura",
+              "Santiago Soares",
+              "Mariana Soares"
             ]
           }
         ]
       }
-    </script>
 
+    </script>
+    <!-- ==========================================
+         EMENTA
+         ========================================== -->
     <section id="ementa">
       <div class="content menu-card">
         <h2 class="menu-heading">Ementa</h2>
-
         <div class="menu-item">
           <h3>Consommé</h3>
           <p>Creme de ervilhas e crocante de presunto</p>
         </div>
-
         <div class="menu-item">
           <h3>Entrada</h3>
           <p>Tentúgal de bacalhau</p>
         </div>
-
         <div class="menu-item">
           <h3>Prato principal</h3>
           <p>Bife Wellington com esparregado de espinafres</p>
         </div>
-
         <div class="menu-item">
           <h3>Carta de Vinhos</h3>
           <p>Quinta de Monforte</p>
@@ -498,88 +983,680 @@
           <p>Bacalhoa Greco di Tufo</p>
           <p>Bacalhoa Merlot</p>
         </div>
-
         <div class="menu-item">
           <h3>Canto dos doces</h3>
         </div>
-
         <div class="menu-item">
           <h3>Bolo dos noivos</h3>
           <p>Massa de limão com recheio de pistácio e doce de frutos vermelhos</p>
         </div>
       </div>
-      <div class="ementa-signature">PEDRO &amp; INÊS</div>
-      <div class="date">05.09.2026</div>
     </section>
+    <!-- ==========================================
+         FOTOGRAFIAS
+         ========================================== -->
+    <section id="fotografias">
+      <div class="content photos-content">
+        <h2 class="section-title">As nossas fotografias</h2>
+        <p class="photos-description">Tira fotografias, partilha os melhores momentos e ajuda-nos a guardar todas as
+          memórias deste dia.</p>
+        <label class="upload-button" for="photo-input">📸 Partilhar fotografias</label>
+        <input id="photo-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif"
+          multiple>
+        <div class="upload-progress">
+          <div class="upload-progress-bar"></div>
+        </div>
+        <div id="upload-status" aria-live="polite"></div>
+        <div id="photo-gallery" class="photo-gallery">
+          <div class="photo-empty">A carregar fotografias...</div>
+        </div>
+        <div id="pagination-container" class="pagination-container">
+          <button id="pagination-prev" class="pagination-btn">← Anterior</button>
+          <span id="page-info" class="page-info"></span>
+          <button id="pagination-next" class="pagination-btn">Próxima →</button>
+        </div>
+      </div>
+    </section>
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="photo-modal">
+      <div class="photo-modal-content">
+        <button class="photo-modal-close" aria-label="Fechar">&times;</button>
+        <button class="photo-modal-nav prev" aria-label="Anterior">&lt;</button>
+        <button class="photo-modal-nav next" aria-label="Próxima">&gt;</button>
+        <img class="photo-modal-image" src="" alt="Fotografia">
+      </div>
+    </div>
   </main>
 
+  <!-- ==========================================
+       JAVASCRIPT — LUGARES
+       ========================================== -->
+
   <script>
+
     (function () {
-      const chart = document.getElementById('seating-chart');
+
+      const chart =
+        document.getElementById('seating-chart');
+
       if (!chart) return;
 
       try {
-        const data = JSON.parse(document.getElementById('lugares-data').textContent);
+
+        const data =
+          JSON.parse(
+            document.getElementById('lugares-data').textContent
+          );
+
         renderSeating(data.tables || []);
+
       } catch (error) {
-        console.error('Não foi possível ler os lugares:', error);
-        chart.innerHTML = '<p class="seating-error">Não foi possível carregar os lugares.</p>';
+
+        console.error(
+          'Não foi possível ler os lugares:',
+          error
+        );
+
+        chart.innerHTML =
+          '<p class="seating-error">' +
+          'Não foi possível carregar os lugares.' +
+          '</p>';
+
       }
 
       function renderSeating(tables) {
+
         tables.forEach((table) => {
-          const block = chart.querySelector(`[data-table-id="${table.id}"]`);
+
+          const block =
+            chart.querySelector(
+              `[data-table-id="${table.id}"]`
+            );
+
           if (!block) return;
 
           if (table.shape === 'round') {
-            renderRoundTable(block, table.seats || []);
+
+            renderRoundTable(
+              block,
+              table.seats || []
+            );
+
           } else {
-            renderRectTable(block, table.seats || []);
+
+            renderRectTable(
+              block,
+              table.seats || []
+            );
+
           }
+
         });
+
       }
 
       function makeSeat(name) {
-        const seat = document.createElement('div');
+
+        const seat =
+          document.createElement('div');
+
         seat.className = 'seat';
+
         seat.textContent = name;
+
         seat.title = name;
+
         return seat;
+
       }
 
       function renderRectTable(block, seats) {
-        const topRow = block.querySelector('.seat-row-top');
-        const bottomRow = block.querySelector('.seat-row-bottom');
-        const half = Math.ceil(seats.length / 2);
 
-        seats.slice(0, half).forEach((name) => topRow.appendChild(makeSeat(name)));
-        seats.slice(half).forEach((name) => bottomRow.appendChild(makeSeat(name)));
+        const topRow =
+          block.querySelector('.seat-row-top');
+
+        const bottomRow =
+          block.querySelector('.seat-row-bottom');
+
+        const half =
+          Math.ceil(seats.length / 2);
+
+        seats
+          .slice(0, half)
+          .forEach((name) => {
+
+            topRow.appendChild(
+              makeSeat(name)
+            );
+
+          });
+
+        seats
+          .slice(half)
+          .forEach((name) => {
+
+            bottomRow.appendChild(
+              makeSeat(name)
+            );
+
+          });
+
       }
 
       function renderRoundTable(block, seats) {
-        const wrap = block.querySelector('.table-round-wrap');
-        const seatEls = seats.map((name) => {
-          const seat = makeSeat(name);
-          wrap.appendChild(seat);
-          return seat;
-        });
+
+        const wrap =
+          block.querySelector('.table-round-wrap');
+
+        const seatEls =
+          seats.map((name) => {
+
+            const seat =
+              makeSeat(name);
+
+            wrap.appendChild(seat);
+
+            return seat;
+
+          });
 
         function layout() {
-          const radius = wrap.clientWidth / 2 - 8;
-          const center = wrap.clientWidth / 2;
+
+          const radius =
+            wrap.clientWidth / 2 - 8;
+
+          const center =
+            wrap.clientWidth / 2;
 
           seatEls.forEach((seat, i) => {
-            const angle = (i / seatEls.length) * Math.PI * 2 - Math.PI / 2;
-            seat.style.left = `${center + radius * Math.cos(angle)}px`;
-            seat.style.top = `${center + radius * Math.sin(angle)}px`;
+
+            const angle =
+              (i / seatEls.length) *
+              Math.PI *
+              2 -
+              Math.PI / 2;
+
+            seat.style.left =
+              `${center + radius * Math.cos(angle)}px`;
+
+            seat.style.top =
+              `${center + radius * Math.sin(angle)}px`;
+
           });
+
         }
 
         layout();
-        window.addEventListener('resize', layout);
+
+        window.addEventListener(
+          'resize',
+          layout
+        );
+
       }
+
     })();
+
   </script>
+
+  <!-- ==========================================
+       JAVASCRIPT — FOTOGRAFIAS
+       ========================================== -->
+
+  <script>
+
+    /*
+     * ==========================================
+     * CONFIGURAÇÃO DA API
+     * ==========================================
+     *
+     * Para testes locais:
+     */
+
+    const API_URL = 'http://localhost:8080';
+
+    /*
+     * Mais tarde, quando tiveres o Cloudflare Tunnel,
+     * troca a linha acima por algo como:
+     *
+     * const API_URL = 'https://fotos.teudominio.pt';
+     */
+
+    // Extract JWT token from URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const jwtToken = urlParams.get('token');
+
+    // Function to get API URL (no token in query anymore)
+    function getApiUrl(endpoint) {
+      return API_URL + endpoint;
+    }
+
+    // Function to get headers with Authorization
+    function getAuthHeaders() {
+      const headers = {};
+      if (jwtToken) {
+        headers['Authorization'] = 'Bearer ' + jwtToken;
+      }
+      return headers;
+    }
+
+    /*
+     * ==========================================
+     * CARREGAR FOTOGRAFIAS
+     * ==========================================
+     */
+
+    let allPhotos = [];
+    let currentPhotoIndex = 0;
+    let currentPage = 1;
+    let totalPhotos = 0;
+    const photosPerPage = 12;
+
+    // Helper to load images with Authorization header
+    async function loadImageWithAuth(imgElement, photoUrl) {
+      try {
+        const response = await fetch(photoUrl, {
+          headers: getAuthHeaders()
+        });
+        if (!response.ok) throw new Error('Failed to load image');
+        const blob = await response.blob();
+        imgElement.src = URL.createObjectURL(blob);
+      } catch (err) {
+        console.error('Error loading image:', err);
+        imgElement.src = '';
+      }
+    }
+
+    async function openPhotoModal(index) {
+      currentPhotoIndex = index;
+      const photo = allPhotos[index];
+      const photoUrl = API_URL + photo.url;
+      await loadImageWithAuth(document.querySelector('.photo-modal-image'), photoUrl);
+      $('#photo-modal').addClass('active');
+    }
+
+    function closePhotoModal() {
+      $('#photo-modal').removeClass('active');
+    }
+
+    function showPrevPhoto() {
+      const newIndex = (currentPhotoIndex - 1 + allPhotos.length) % allPhotos.length;
+      openPhotoModal(newIndex);
+    }
+
+    function showNextPhoto() {
+      const newIndex = (currentPhotoIndex + 1) % allPhotos.length;
+      openPhotoModal(newIndex);
+    }
+
+    function updatePaginationUI() {
+      const totalPages = Math.ceil(totalPhotos / photosPerPage);
+
+      if (totalPages <= 1) {
+        $('#pagination-container').hide();
+        return;
+      }
+
+      $('#pagination-container').show();
+      $('#page-info').text(`Página ${currentPage} de ${totalPages}`);
+      $('#pagination-prev').prop('disabled', currentPage === 1);
+      $('#pagination-next').prop('disabled', currentPage === totalPages);
+    }
+
+    function loadPhotos(page = 1) {
+      currentPage = page;
+      const offset = (page - 1) * photosPerPage;
+
+      const gallery = $('#photo-gallery');
+      gallery.html(`
+        <div class="photo-empty">
+          A carregar fotografias...
+        </div>
+      `);
+
+      $.ajax({
+
+        url: getApiUrl('/api/photos'),
+
+        method: 'GET',
+
+        headers: getAuthHeaders(),
+
+        data: {
+          offset: offset,
+          limit: photosPerPage
+        },
+
+        dataType: 'json'
+
+      })
+
+        .done(function (data) {
+
+          gallery.empty();
+          allPhotos = [];
+
+          const photos = data.photos || [];
+          totalPhotos = data.total || 0;
+
+          if (photos.length === 0 && page === 1) {
+
+            gallery.html(`
+            <div class="photo-empty">
+              Ainda não existem fotografias.<br>
+              Sê o primeiro a partilhar uma!
+            </div>
+          `);
+
+            $('#pagination-container').hide();
+            return;
+
+          }
+
+          photos.forEach(function (photo, index) {
+
+            allPhotos.push(photo);
+            const photoUrl = API_URL + photo.url;
+            const globalIndex = index;
+
+            const link = $('<a>', {
+              href: '#',
+              click: function (e) {
+                e.preventDefault();
+                openPhotoModal(globalIndex);
+              }
+            });
+
+            const image = $('<img>', {
+              alt: photo.name || 'Fotografia do casamento',
+              loading: 'lazy'
+            });
+
+            link.append(image);
+            gallery.append(link);
+
+            // Load image with Authorization header
+            loadImageWithAuth(image[0], photoUrl);
+
+          });
+
+          updatePaginationUI();
+
+        })
+
+        .fail(function (xhr) {
+
+          console.error('Erro ao carregar fotografias:', xhr);
+          gallery.html(`
+            <div class="photo-empty">
+              Não foi possível carregar as fotografias.
+            </div>
+          `);
+          $('#pagination-container').hide();
+
+        });
+
+    }
+
+    /*
+     * ==========================================
+     * UPLOAD DE FOTOGRAFIAS
+     * ==========================================
+     */
+
+    $('#photo-input').on(
+      'change',
+      function () {
+
+        const input = this;
+
+        const files = input.files;
+
+        if (!files || files.length === 0) {
+          return;
+        }
+
+        const formData =
+          new FormData();
+
+        /*
+         * O Go espera que todos os ficheiros
+         * sejam enviados no campo "photos".
+         */
+
+        for (
+          let i = 0;
+          i < files.length;
+          i++
+        ) {
+
+          formData.append(
+            'photos',
+            files[i],
+            files[i].name
+          );
+
+        }
+
+        const status =
+          $('#upload-status');
+
+        const progress =
+          $('.upload-progress');
+
+        const progressBar =
+          $('.upload-progress-bar');
+
+        status.text(
+
+          files.length === 1
+
+            ? 'A enviar fotografia...'
+
+            : `A enviar ${files.length} fotografias...`
+
+        );
+
+        progress.show();
+
+        progressBar.css(
+          'width',
+          '0%'
+        );
+
+        $.ajax({
+
+          url:
+            getApiUrl('/api/upload'),
+
+          method:
+            'POST',
+
+          headers:
+            getAuthHeaders(),
+
+          data:
+            formData,
+
+          processData:
+            false,
+
+          contentType:
+            false,
+
+          /*
+           * Mostra o progresso do upload.
+           */
+
+          xhr: function () {
+
+            const xhr =
+              new XMLHttpRequest();
+
+            xhr.upload.addEventListener(
+
+              'progress',
+
+              function (event) {
+
+                if (event.lengthComputable) {
+
+                  const percent =
+                    Math.round(
+                      (event.loaded /
+                        event.total) *
+                      100
+                    );
+
+                  progressBar.css(
+                    'width',
+                    percent + '%'
+                  );
+
+                }
+
+              }
+
+            );
+
+            return xhr;
+
+          }
+
+        })
+
+          .done(function (data) {
+
+            const uploaded =
+              data.photos
+                ? data.photos.length
+                : files.length;
+
+            status.text(
+
+              uploaded === 1
+
+                ? '✓ Fotografia enviada!'
+
+                : `✓ ${uploaded} fotografias enviadas!`
+
+            );
+
+            progressBar.css(
+              'width',
+              '100%'
+            );
+
+            /*
+             * Recarrega a galeria para mostrar
+             * imediatamente as fotografias novas.
+             */
+
+            loadPhotos(1);
+
+          })
+
+          .fail(function (xhr) {
+
+            console.error(
+              'Erro no upload:',
+              xhr
+            );
+
+            let message =
+              'Não foi possível enviar as fotografias.';
+
+            if (
+              xhr.responseJSON &&
+              xhr.responseJSON.error
+            ) {
+
+              message =
+                xhr.responseJSON.error;
+
+            }
+
+            status.text(
+              '✕ ' + message
+            );
+
+          })
+
+          .always(function () {
+
+            /*
+             * Permite selecionar novamente
+             * as mesmas fotografias.
+             */
+
+            input.value = '';
+
+            setTimeout(function () {
+
+              progress.fadeOut(300);
+
+            }, 1000);
+
+          });
+
+      }
+    );
+
+    /*
+     * ==========================================
+     * ARRANQUE
+     * ==========================================
+     */
+
+    $(document).ready(function () {
+
+      loadPhotos(1);
+
+      // Pagination button handlers
+      $('#pagination-prev').on('click', function () {
+        if (currentPage > 1) {
+          loadPhotos(currentPage - 1);
+        }
+      });
+
+      $('#pagination-next').on('click', function () {
+        const totalPages = Math.ceil(totalPhotos / photosPerPage);
+        if (currentPage < totalPages) {
+          loadPhotos(currentPage + 1);
+        }
+      });
+
+      // Modal event listeners
+      $('.photo-modal-close').on('click', closePhotoModal);
+      $('.photo-modal-nav.prev').on('click', showPrevPhoto);
+      $('.photo-modal-nav.next').on('click', showNextPhoto);
+
+      // Close modal when clicking outside the content
+      $('#photo-modal').on('click', function (e) {
+        if (e.target === this) {
+          closePhotoModal();
+        }
+      });
+
+      // Close modal on ESC key
+      $(document).on('keydown', function (e) {
+        if (e.key === 'Escape' && $('#photo-modal').hasClass('active')) {
+          closePhotoModal();
+        }
+        // Navigate with arrow keys
+        if ($('#photo-modal').hasClass('active')) {
+          if (e.key === 'ArrowLeft') {
+            showPrevPhoto();
+          } else if (e.key === 'ArrowRight') {
+            showNextPhoto();
+          }
+        }
+      });
+
+    });
+
+  </script>
+
 </body>
 
 </html>
